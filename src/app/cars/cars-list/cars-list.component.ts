@@ -1,12 +1,16 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { Car } from '../models/car';
 
 @Component({
   selector: 'cs-cars-list',
   templateUrl: './cars-list.component.html',
-  styleUrls: ['./cars-list.component.less']
+  styleUrls: ['./cars-list.component.less'],
+  encapsulation: ViewEncapsulation.None
 })
 export class CarsListComponent implements OnInit {
+
+  totalCost : number;
+  grossCost : number;
 
   cars : Car[] = [
     {
@@ -20,7 +24,7 @@ export class CarsListComponent implements OnInit {
         surname: 'Kowalski'
       },
       cost: 300,
-      isFullyDamages: true
+      isFullyDamaged: true
     },
     {
       id: 2,
@@ -32,8 +36,8 @@ export class CarsListComponent implements OnInit {
         firstName: 'Jan',
         surname: 'Kowalski'
       },
-      cost: 300,
-      isFullyDamages: true
+      cost: 400,
+      isFullyDamaged: false
     },
     {
       id: 3,
@@ -45,14 +49,23 @@ export class CarsListComponent implements OnInit {
         firstName: 'Jan',
         surname: 'Kowalski'
       },
-      cost: 300,
-      isFullyDamages: true
+      cost: 700,
+      isFullyDamaged: true
     },
   ];
 
   constructor() { }
 
   ngOnInit() {
+    this.countTotalCost();
+  }
+
+  countTotalCost() : void {
+     this.totalCost = this.cars.map(car => car.cost).reduce((prev, curr) => prev + curr);
+  }
+
+  onShownGross(grossCost : number) : void {
+    this.grossCost = grossCost;
   }
 
 }
